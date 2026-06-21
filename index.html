@@ -3,352 +3,381 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Foundations Quiz</title>
+  <title>AI Foundations · Quiz</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
     :root{
-      --bg:#0a0e17;
-      --card:#111827;
-      --border:#1f2937;
-      --border-light:#374151;
-      --text:#f3f4f6;
-      --muted:#9ca3af;
-      --dim:#4b5563;
-      --accent:#6366f1;
-      --accent-glow:rgba(99,102,241,.15);
-      --green:#22c55e;
-      --green-bg:rgba(34,197,94,.12);
-      --red:#ef4444;
-      --red-bg:rgba(239,68,68,.1);
-      --amber:#f59e0b;
+      --bg:#0b0d1a;
+      --bg2:#11132a;
+      --card:#151738;
+      --card-hover:#1c1f4a;
+      --border:#25285e;
+      --border-glow:rgba(99,132,255,.15);
+      --text:#e8ecff;
+      --muted:#7a80b5;
+      --dim:#3d4166;
+      --cyan:#00f0ff;
+      --cyan-glow:rgba(0,240,255,.12);
+      --purple:#8b6cff;
+      --purple-glow:rgba(139,108,255,.12);
+      --pink:#ff3da6;
+      --green:#00ff88;
+      --green-glow:rgba(0,255,136,.1);
+      --red:#ff4466;
+      --red-glow:rgba(255,68,102,.08);
+      --amber:#ffb83d;
     }
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;overflow-x:hidden;background-image:radial-gradient(ellipse 60% 40% at 20% 0%,rgba(99,132,255,.04) 0%,transparent 60%),radial-gradient(ellipse 40% 30% at 80% 100%,rgba(139,108,255,.03) 0%,transparent 50%)}
 
-    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;overflow-x:hidden}
+    .container{max-width:760px;width:100%;padding:1.5rem;flex:1;display:flex;flex-direction:column}
 
-    .container{max-width:720px;width:100%;padding:2rem 1.5rem;flex:1;display:flex;flex-direction:column}
+    header{padding:1.5rem 0 1rem;display:flex;align-items:center;justify-content:space-between}
+    header .logo{font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.12em}
+    header .logo span{color:var(--cyan)}
+    header .chip{font-size:.6rem;font-weight:600;font-family:'JetBrains Mono',monospace;background:var(--card);border:1px solid var(--border);padding:.25rem .7rem;border-radius:100px;color:var(--muted);letter-spacing:.04em}
 
-    header{text-align:center;padding:1.5rem 0 2rem}
-    header .badge{display:inline-flex;align-items:center;gap:.35rem;background:var(--accent-glow);border:1px solid rgba(99,102,241,.2);padding:.3rem .8rem;border-radius:100px;font-size:.65rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}
-    header h1{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;letter-spacing:-.03em;line-height:1.2}
-    header h1 span{background:linear-gradient(135deg,var(--accent),#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-    header p{color:var(--muted);font-size:.9rem;margin-top:.5rem}
+    .hero{text-align:center;padding:2.5rem 0 2rem}
+    .hero .glyph{font-size:3.2rem;margin-bottom:.5rem;display:inline-block;animation:glitch 4s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(0,240,255,.15))}
+    @keyframes glitch{0%,90%,100%{transform:translate(0)}92%{transform:translate(-2px,1px)}94%{transform:translate(2px,-1px)}96%{transform:translate(-1px,2px)}98%{transform:translate(1px,-2px)}}
+    .hero h1{font-size:clamp(1.8rem,5vw,3rem);font-weight:900;letter-spacing:-.04em;line-height:1.15}
+    .hero h1 span{background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero p{color:var(--muted);font-size:.85rem;margin-top:.5rem;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.04em}
+    .hero p span{color:var(--cyan)}
 
-    .progress-wrap{display:flex;align-items:center;gap:1rem;margin-bottom:2rem}
-    .progress-bar{flex:1;height:4px;background:var(--border);border-radius:4px;overflow:hidden}
-    .progress-bar .fill{height:100%;background:linear-gradient(90deg,var(--accent),#a78bfa);border-radius:4px;transition:width .5s ease;width:0%}
-    .progress-wrap .count{font-size:.75rem;color:var(--dim);font-weight:600;white-space:nowrap}
+    .progress{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;padding:0}
+    .progress .track{flex:1;height:3px;background:var(--border);border-radius:3px;overflow:hidden}
+    .progress .track .fill{height:100%;border-radius:3px;transition:width .5s cubic-bezier(.4,0,.2,1);width:0%;background:linear-gradient(90deg,var(--cyan),var(--purple))}
+    .progress .track .fill.shimmer{background:linear-gradient(90deg,var(--cyan),var(--purple),var(--cyan),var(--purple));background-size:200% 100%;animation:shimmer 1.5s linear infinite}
+    @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+    .progress .count{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--dim);font-weight:600;min-width:3rem;text-align:right}
 
-    .quiz-area{flex:1;display:flex;flex-direction:column}
+    .quiz{flex:1;display:none;flex-direction:column}
+    .quiz.active{display:flex}
 
-    .scenario-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.75rem;margin-bottom:1.5rem;transition:border-color .3s}
-    .scenario-card .q-num{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:.4rem}
-    .scenario-card .q-text{font-size:1.05rem;line-height:1.7;color:var(--text);font-weight:400}
-    .scenario-card .q-text strong{color:#fff;font-weight:600}
-    .scenario-card .q-text em{color:var(--muted);font-style:italic}
+    .scene{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.75rem;margin-bottom:1rem;position:relative;overflow:hidden;transition:border-color .4s}
+    .scene::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:0;transition:opacity .4s}
+    .scene.active::before{opacity:.6}
+    .scene .tag{display:inline-flex;align-items:center;gap:.4rem;font-family:'JetBrains Mono',monospace;font-size:.55rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--cyan);margin-bottom:.6rem;background:var(--cyan-glow);padding:.2rem .6rem;border-radius:100px;border:1px solid rgba(0,240,255,.08)}
+    .scene .tag .dot{width:4px;height:4px;border-radius:50%;background:var(--cyan);animation:pulse-dot 1.5s ease-in-out infinite}
+    @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.3}}
+    .scene .q{font-size:1rem;line-height:1.7;color:var(--text);font-weight:400}
+    .scene .q strong{color:#fff;font-weight:600}
+    .scene .q em{color:var(--muted);font-style:italic}
+    .scene .q-highlight{display:inline-block;background:var(--purple-glow);padding:0 .15rem;border-radius:4px}
 
-    .options{display:grid;gap:.6rem;margin-bottom:1.5rem}
-    .option{display:block;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem;cursor:pointer;transition:all .25s;font-size:.9rem;color:var(--muted);font-weight:500;text-align:left;width:100%;font-family:inherit}
-    .option:hover:not(.disabled){border-color:var(--border-light);background:#1a1f2e;color:var(--text)}
-    .option.selected{border-color:var(--accent);background:var(--accent-glow);color:#e0e7ff}
-    .option.correct{border-color:var(--green);background:var(--green-bg);color:var(--green)}
-    .option.wrong{border-color:var(--red);background:var(--red-bg);color:var(--red)}
-    .option.disabled{cursor:default;pointer-events:none;opacity:.85}
+    .opts{display:grid;gap:.5rem;margin-bottom:1rem}
+    .opt{display:flex;align-items:center;gap:.75rem;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:.85rem 1.1rem;cursor:pointer;transition:all .25s cubic-bezier(.4,0,.2,1);font-size:.85rem;color:var(--muted);font-weight:500;text-align:left;width:100%;font-family:inherit;position:relative}
+    .opt .idx{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--dim);font-weight:700;width:1.2rem;flex-shrink:0}
+    .opt:hover:not(.disabled){border-color:rgba(0,240,255,.2);background:var(--card-hover);color:var(--text);transform:translateX(4px)}
+    .opt.selected{border-color:var(--purple);background:var(--purple-glow);color:#ddd6ff;box-shadow:0 0 20px rgba(139,108,255,.06)}
+    .opt.selected .idx{color:var(--purple)}
+    .opt.correct{border-color:var(--green);background:var(--green-glow);color:var(--green)}
+    .opt.correct .idx{color:var(--green)}
+    .opt.wrong{border-color:var(--red);background:var(--red-glow);color:var(--red)}
+    .opt.wrong .idx{color:var(--red)}
+    .opt.disabled{cursor:default;pointer-events:none;opacity:.9}
+    .opt .ripple{position:absolute;border-radius:50%;background:rgba(0,240,255,.15);transform:scale(0);animation:rippleAnim .5s ease-out;pointer-events:none}
+    @keyframes rippleAnim{to{transform:scale(4);opacity:0}}
 
-    .feedback{background:var(--card);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;display:none;border-left:3px solid}
-    .feedback.visible{display:block;animation:fadeIn .3s}
-    .feedback.correct{border-color:var(--green);background:var(--green-bg)}
-    .feedback.wrong{border-color:var(--red);background:var(--red-bg)}
-    .feedback .fb-head{font-weight:700;font-size:.85rem;margin-bottom:.25rem}
-    .feedback .fb-head .icon{margin-right:.35rem}
-    .feedback.correct .fb-head{color:var(--green)}
-    .feedback.wrong .fb-head{color:var(--red)}
-    .feedback p{font-size:.82rem;color:var(--muted);line-height:1.6}
-    .feedback .explain{color:var(--text);font-weight:500;margin-top:.2rem}
+    .fb{background:var(--card);border-radius:12px;padding:1.2rem 1.4rem;margin-bottom:1rem;display:none;animation:slideUp .35s ease;position:relative;overflow:hidden}
+    .fb.visible{display:block}
+    .fb.correct{border:1px solid rgba(0,255,136,.15)}
+    .fb.wrong{border:1px solid rgba(255,68,102,.15)}
+    .fb::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px}
+    .fb.correct::before{background:var(--green);box-shadow:0 0 12px rgba(0,255,136,.3)}
+    .fb.wrong::before{background:var(--red);box-shadow:0 0 12px rgba(255,68,102,.3)}
+    .fb .fb-row{display:flex;align-items:flex-start;gap:.75rem}
+    .fb .fb-icon{font-size:1.2rem;line-height:1;flex-shrink:0;margin-top:.1rem}
+    .fb .fb-content{flex:1}
+    .fb .fb-title{font-weight:700;font-size:.85rem;margin-bottom:.2rem}
+    .fb.correct .fb-title{color:var(--green)}
+    .fb.wrong .fb-title{color:var(--red)}
+    .fb .fb-explain{font-size:.8rem;color:var(--muted);line-height:1.6}
+    .fb .fb-explain strong{color:var(--text)}
+    @keyframes slideUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-    .next-btn{background:var(--accent);color:#fff;border:none;border-radius:12px;padding:1rem;font-weight:700;font-size:.95rem;cursor:pointer;transition:all .3s;margin-top:auto;display:none;width:100%;font-family:inherit}
-    .next-btn:hover{background:#4f46e5;transform:translateY(-2px);box-shadow:0 12px 30px rgba(99,102,241,.25)}
-    .next-btn.visible{display:block}
+    .next{background:linear-gradient(135deg,var(--purple),var(--cyan));color:var(--bg);border:none;border-radius:12px;padding:1rem;font-weight:800;font-size:.9rem;cursor:pointer;transition:all .3s;margin-top:auto;display:none;width:100%;font-family:inherit;letter-spacing:.02em}
+    .next.visible{display:block;animation:slideUp .3s}
+    .next:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(139,108,255,.3)}
 
-    @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-    @keyframes pop{0%{transform:scale(.8);opacity:0}60%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+    .grid-bg{position:fixed;inset:0;pointer-events:none;z-index:-1;background-image:linear-gradient(rgba(37,40,94,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(37,40,94,.03) 1px,transparent 1px);background-size:40px 40px}
 
-    .start-screen{text-align:center;flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:2rem 0}
-    .start-screen .icon{font-size:3.5rem;margin-bottom:1rem;animation:float 3s ease-in-out infinite}
-    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-    .start-screen h2{font-size:1.5rem;font-weight:800;margin-bottom:.5rem}
-    .start-screen p{color:var(--muted);font-size:.9rem;max-width:450px;line-height:1.7;margin-bottom:2rem}
-    .start-btn{background:var(--accent);color:#fff;border:none;padding:1rem 3rem;border-radius:100px;font-weight:700;font-size:1rem;cursor:pointer;transition:all .3s;font-family:inherit}
-    .start-btn:hover{background:#4f46e5;transform:translateY(-3px);box-shadow:0 16px 40px rgba(99,102,241,.3)}
+    /* START */
+    .start{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:2rem 0}
+    .start .brain-wrap{margin-bottom:1.5rem;position:relative}
+    .start .brain{font-size:4rem;display:block;animation:brainFloat 4s ease-in-out infinite}
+    @keyframes brainFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-12px) scale(1.02)}}
+    .start .brain-ring{position:absolute;inset:-12px;border:1px solid rgba(0,240,255,.1);border-radius:50%;animation:spin 8s linear infinite}
+    .start .brain-ring:nth-child(2){inset:-20px;border-color:rgba(139,108,255,.06);animation-duration:12s;animation-direction:reverse}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .start h2{font-size:1.3rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.4rem}
+    .start p{color:var(--muted);font-size:.85rem;max-width:440px;line-height:1.7;margin-bottom:2rem}
+    .start p code{font-family:'JetBrains Mono',monospace;color:var(--cyan);font-size:.75rem;background:var(--cyan-glow);padding:.1rem .3rem;border-radius:4px}
+    .btn-start{background:linear-gradient(135deg,var(--purple),var(--cyan));color:var(--bg);border:none;padding:1rem 3rem;border-radius:100px;font-weight:800;font-size:.95rem;cursor:pointer;transition:all .3s;font-family:inherit;letter-spacing:.02em}
+    .btn-start:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 20px 50px rgba(139,108,255,.25)}
 
-    .result-screen{text-align:center;flex:1;display:none;flex-direction:column;justify-content:center;align-items:center;padding:2rem 0}
-    .result-screen.visible{display:flex;animation:fadeIn .5s}
-    .result-screen .big-score{font-size:5rem;font-weight:900;letter-spacing:-.04em;line-height:1;margin-bottom:.25rem}
-    .result-screen .big-score.perfect{background:linear-gradient(135deg,var(--green),#34d399);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-    .result-screen .big-score.great{background:linear-gradient(135deg,var(--accent),#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-    .result-screen .big-score.good{background:linear-gradient(135deg,var(--amber),#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-    .result-screen .big-score.oop{color:var(--red)}
-    .result-screen .score-label{font-size:1.1rem;color:var(--muted);margin-bottom:1.5rem}
-    .result-screen .verdict{font-size:1.3rem;font-weight:700;margin-bottom:.5rem}
-    .result-screen .result-detail{color:var(--muted);font-size:.9rem;max-width:450px;line-height:1.7;margin-bottom:2rem}
-    .result-btn{background:var(--accent);color:#fff;border:none;padding:.9rem 2.5rem;border-radius:100px;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .3s;font-family:inherit}
-    .result-btn:hover{background:#4f46e5;transform:translateY(-2px)}
+    /* RESULT */
+    .result{display:none;flex:1;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:1rem 0}
+    .result.visible{display:flex;animation:fadeScale .5s ease}
+    @keyframes fadeScale{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+    .result .big{font-size:5rem;font-weight:900;letter-spacing:-.05em;line-height:1;font-family:'JetBrains Mono',monospace}
+    .result .big.god{background:linear-gradient(135deg,var(--cyan),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .result .big.pro{background:linear-gradient(135deg,var(--purple),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .result .big.ok{background:linear-gradient(135deg,var(--amber),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .result .big.nah{color:var(--red)}
+    .result .lbl{font-size:.8rem;color:var(--dim);font-family:'JetBrains Mono',monospace;margin-top:.2rem;margin-bottom:1rem}
+    .result .verdict{font-size:1.2rem;font-weight:700;margin-bottom:.3rem}
+    .result .detail{color:var(--muted);font-size:.85rem;max-width:420px;line-height:1.7;margin-bottom:1.5rem}
 
-    .review-grid{display:grid;gap:.75rem;margin-top:2rem;width:100%;max-width:500px;text-align:left}
-    .review-item{display:flex;align-items:center;gap:.6rem;background:var(--card);border-radius:10px;padding:.65rem .9rem;font-size:.78rem;border:1px solid var(--border)}
-    .review-item .r-icon{font-size:1rem}
-    .review-item .r-label{color:var(--text);font-weight:500}
-    .review-item .r-q{color:var(--muted);font-size:.7rem;margin-top:.1rem}
-    .review-item.r-correct{border-color:rgba(34,197,94,.2)}
-    .review-item.r-wrong{border-color:rgba(239,68,68,.2)}
+    .matrix{display:grid;gap:.5rem;width:100%;max-width:480px;margin-bottom:1.5rem}
+    .m-item{display:flex;align-items:center;gap:.6rem;background:var(--card);border-radius:10px;padding:.6rem .85rem;font-size:.75rem;border:1px solid var(--border);transition:border-color .3s;text-align:left}
+    .m-item .m-icon{font-size:.9rem;flex-shrink:0}
+    .m-item .m-label{font-weight:600;color:var(--text);font-size:.78rem}
+    .m-item .m-q{color:var(--dim);font-size:.6rem;font-family:'JetBrains Mono',monospace;margin-top:.05rem}
+    .m-item.m-hit{border-color:rgba(0,255,136,.12)}
+    .m-item.m-miss{border-color:rgba(255,68,102,.12)}
+    .btn-retry{background:var(--card);color:var(--text);border:1px solid var(--border);padding:.85rem 2.5rem;border-radius:100px;font-weight:700;font-size:.85rem;cursor:pointer;transition:all .3s;font-family:inherit}
+    .btn-retry:hover{background:var(--card-hover);border-color:rgba(0,240,255,.2);transform:translateY(-2px)}
+
+    /* particles */
+    .particle{position:fixed;width:2px;height:2px;background:var(--cyan);border-radius:50%;pointer-events:none;z-index:-1;opacity:.3}
+    .particle:nth-child(1){top:10%;left:5%;animation:drift 20s linear infinite}
+    .particle:nth-child(2){top:30%;left:90%;animation:drift 25s linear infinite reverse;width:3px;height:3px;background:var(--purple)}
+    .particle:nth-child(3){top:60%;left:10%;animation:drift 18s linear infinite;width:1px;height:1px}
+    .particle:nth-child(4){top:80%;left:85%;animation:drift 22s linear infinite reverse}
+    .particle:nth-child(5){top:50%;left:50%;animation:drift 30s linear infinite;width:4px;height:4px;background:var(--purple);opacity:.15}
+    @keyframes drift{0%{transform:translate(0,0) rotate(0deg)}25%{transform:translate(30px,-20px) rotate(90deg)}50%{transform:translate(-20px,30px) rotate(180deg)}75%{transform:translate(40px,10px) rotate(270deg)}100%{transform:translate(0,0) rotate(360deg)}}
+
+    .status-bar{display:flex;align-items:center;gap:.5rem;padding:.5rem 0;font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--dim);margin-top:auto}
+    .status-bar .pulse{width:4px;height:4px;border-radius:50%;background:var(--green);animation:pulse-dot 2s ease-in-out infinite}
 
     @media(max-width:480px){
       .container{padding:1rem}
-      .scenario-card{padding:1.25rem}
-      .scenario-card .q-text{font-size:.95rem}
-      .option{padding:.8rem 1rem;font-size:.85rem}
+      .scene{padding:1.25rem}
+      .scene .q{font-size:.92rem}
+      .opt{padding:.7rem .9rem;font-size:.8rem}
+      .result .big{font-size:3.5rem}
     }
   </style>
 </head>
 <body>
+  <div class="grid-bg"></div>
+  <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
+
   <div class="container">
 
     <header>
-      <div class="badge">&#129504; Interactive Quiz</div>
-      <h1>6 AI <span>Foundations</span></h1>
-      <p>Match each scenario to the one mechanic at play</p>
+      <div class="logo">ai<span>//</span>foundations</div>
+      <div class="chip">v1.0 · 6 scenarios</div>
     </header>
 
+    <!-- HERO -->
+    <div class="hero" id="heroArea">
+      <div class="glyph">&#129302;</div>
+      <h1>6 AI <span>Foundations</span></h1>
+      <p>match each scenario to <span>one</span> mechanic &rarr; get feedback &rarr; level up</p>
+    </div>
+
     <!-- PROGRESS -->
-    <div class="progress-wrap" id="progressWrap" style="display:none">
-      <div class="progress-bar"><div class="fill" id="progressFill"></div></div>
-      <span class="count" id="progressCount">1 / 6</span>
+    <div class="progress" id="progressBar" style="display:none">
+      <div class="track"><div class="fill" id="progressFill"></div></div>
+      <span class="count" id="progressCount">01 / 06</span>
     </div>
 
     <!-- START -->
-    <div class="start-screen" id="startScreen">
-      <div class="icon">&#129302;</div>
-      <h2>Ready to Test Your Understanding?</h2>
-      <p>Six scenarios. Six AI foundations. For each one, pick the <strong>single mechanic</strong> that best explains what's happening. I'll tell you if you're right and explain why.</p>
-      <button class="start-btn" onclick="startQuiz()">&#8594; Start the Quiz</button>
+    <div class="start" id="startScreen">
+      <div class="brain-wrap">
+        <span class="brain">&#129504;</span>
+        <span class="brain-ring"></span>
+        <span class="brain-ring"></span>
+      </div>
+      <h2>Ready to test your AI literacy?</h2>
+      <p>Six scenarios. One correct mechanic each. Tap an answer, get instant feedback, and see your final score. Built to sharpen your mental model of <code>how LLMs actually work</code>.</p>
+      <button class="btn-start" onclick="boot()">&#8594; Initialize Quiz</button>
     </div>
 
     <!-- QUIZ -->
-    <div class="quiz-area" id="quizArea" style="display:none">
-      <div class="scenario-card" id="scenarioCard">
-        <div class="q-num" id="qNum"></div>
-        <div class="q-text" id="qText"></div>
+    <div class="quiz" id="quizArea">
+      <div class="scene active" id="sceneBox">
+        <div class="tag"><span class="dot"></span><span id="qTag">SCENARIO 01</span></div>
+        <div class="q" id="qText"></div>
       </div>
 
-      <div class="options" id="options"></div>
+      <div class="opts" id="optsBox"></div>
 
-      <div class="feedback" id="feedback">
-        <div class="fb-head"><span class="icon" id="fbIcon"></span><span id="fbTitle"></span></div>
-        <p><span class="explain" id="fbExplain"></span></p>
+      <div class="fb" id="fbBox">
+        <div class="fb-row">
+          <span class="fb-icon" id="fbIcon"></span>
+          <div class="fb-content">
+            <div class="fb-title" id="fbTitle"></div>
+            <div class="fb-explain" id="fbExplain"></div>
+          </div>
+        </div>
       </div>
 
-      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">&#8594; Next Question</button>
+      <button class="next" id="nextBtn" onclick="advance()">&#8594; Next</button>
     </div>
 
     <!-- RESULT -->
-    <div class="result-screen" id="resultScreen">
-      <div class="big-score" id="scoreDisplay">6/6</div>
-      <div class="score-label" id="scoreLabel">out of 6 correct</div>
-      <div class="verdict" id="verdict"></div>
-      <div class="result-detail" id="resultDetail"></div>
-      <div class="review-grid" id="reviewGrid"></div>
-      <button class="result-btn" onclick="resetQuiz()" style="margin-top:1.5rem">&#8635; Try Again</button>
+    <div class="result" id="resultScreen">
+      <div class="big" id="scoreBig">6/6</div>
+      <div class="lbl" id="scoreLbl">correct</div>
+      <div class="verdict" id="verdictText"></div>
+      <div class="detail" id="detailText"></div>
+      <div class="matrix" id="matrixBox"></div>
+      <button class="btn-retry" onclick="reboot()">&#8635; Run Again</button>
+    </div>
+
+    <div class="status-bar" id="statusBar">
+      <span class="pulse"></span>
+      <span>system ready</span>
     </div>
 
   </div>
 
   <script>
-    const questions = [
-      {
-        q: 'I ask a model for <strong>today\'s headlines</strong> and it gives me <strong>old news</strong> with total confidence.',
-        options: ['Pattern matching', 'Training data & the cutoff', 'Tokens', 'Context window', 'Temperature', 'Hallucinations'],
-        correct: 1,
-        answer: 'Training data & the cutoff',
-        explain: 'The model only knows what it was trained on — anything after its cutoff date simply doesn\'t exist in its knowledge.'
-      },
-      {
-        q: 'Halfway through a <strong>very long chat</strong>, the model <strong>forgets a key detail</strong> I gave it at the start.',
-        options: ['Pattern matching', 'Training data & the cutoff', 'Tokens', 'Context window', 'Temperature', 'Hallucinations'],
-        correct: 3,
-        answer: 'Context window',
-        explain: 'The chat exceeded the model\'s context window — the early messages were dropped so it can\'t "see" them anymore.'
-      },
-      {
-        q: 'I ask the <strong>same prompt twice</strong> and get <strong>two quite different answers</strong>.',
-        options: ['Pattern matching', 'Training data & the cutoff', 'Tokens', 'Context window', 'Temperature', 'Hallucinations'],
-        correct: 4,
-        answer: 'Temperature',
-        explain: 'Temperature controls randomness — higher values mean more variation in the output, even with identical input.'
-      },
-      {
-        q: 'The model cites a <strong>specific paper, author, and journal volume</strong> that turn out <strong>not to exist</strong>.',
-        options: ['Pattern matching', 'Training data & the cutoff', 'Tokens', 'Context window', 'Temperature', 'Hallucinations'],
-        correct: 5,
-        answer: 'Hallucinations',
-        explain: 'The model generates plausible-sounding references confidently — it\'s not checking a database, it\'s predicting what looks real.'
-      },
-      {
-        q: 'A <strong>very long document</strong> gets cut off and the model only answers about <strong>the first half</strong>.',
-        options: ['Pattern matching', 'Training data & the cutoff', 'Tokens', 'Context window', 'Temperature', 'Hallucinations'],
-        correct: 2,
-        answer: 'Tokens',
-        explain: 'The document exceeded the token limit — it was truncated during input, so the second half was never "read" by the model.'
-      },
-      {
-        q: 'The model <strong>finishes my sentence</strong> in a fluent, natural way, but <strong>one fact in it is wrong</strong>.',
-        options: ['Pattern matching', 'Training data & the cutoff', 'Tokens', 'Context window', 'Temperature', 'Hallucinations'],
-        correct: 0,
-        answer: 'Pattern matching',
-        explain: 'The model is matching linguistic patterns to produce fluent text — it doesn\'t "know" facts, it predicts what word is likeliest next.'
-      }
+    const DATA = [
+      { q: 'I ask a model for <strong>today\'s headlines</strong> and it gives me <strong>old news</strong> with total confidence.', opts: ['Pattern matching','Training data & the cutoff','Tokens','Context window','Temperature','Hallucinations'], ans: 1, label: 'Training data & the cutoff', tip: 'The model only knows what it was trained on — anything after its cutoff date simply doesn\'t exist in its knowledge.' },
+      { q: 'Halfway through a <strong>very long chat</strong>, the model <strong>forgets a key detail</strong> I gave it at the start.', opts: ['Pattern matching','Training data & the cutoff','Tokens','Context window','Temperature','Hallucinations'], ans: 3, label: 'Context window', tip: 'The chat exceeded the model\'s context window — the early messages were dropped so it can\'t "see" them anymore.' },
+      { q: 'I ask the <strong>same prompt twice</strong> and get <strong>two quite different answers</strong>.', opts: ['Pattern matching','Training data & the cutoff','Tokens','Context window','Temperature','Hallucinations'], ans: 4, label: 'Temperature', tip: 'Temperature controls randomness — higher values mean more variation in the output, even with identical input.' },
+      { q: 'The model cites a <strong>specific paper, author, and journal volume</strong> that turn out <strong>not to exist</strong>.', opts: ['Pattern matching','Training data & the cutoff','Tokens','Context window','Temperature','Hallucinations'], ans: 5, label: 'Hallucinations', tip: 'The model generates plausible-looking references confidently — it\'s not checking a database, it\'s predicting what looks real.' },
+      { q: 'A <strong>very long document</strong> gets cut off and the model only answers about <strong>the first half</strong>.', opts: ['Pattern matching','Training data & the cutoff','Tokens','Context window','Temperature','Hallucinations'], ans: 2, label: 'Tokens', tip: 'The document exceeded the token limit — it was truncated during input, so the second half was never "read" by the model.' },
+      { q: 'The model <strong>finishes my sentence</strong> in a fluent, natural way, but <strong>one fact in it is wrong</strong>.', opts: ['Pattern matching','Training data & the cutoff','Tokens','Context window','Temperature','Hallucinations'], ans: 0, label: 'Pattern matching', tip: 'The model is matching linguistic patterns to produce fluent text — it doesn\'t "know" facts, it predicts what word is likeliest next.' }
     ];
 
-    let current = 0;
-    let score = 0;
-    let answered = false;
-    let results = [];
+    let idx = 0, score = 0, log = [], locked = false, started = false;
 
-    function startQuiz() {
+    function boot(){
       document.getElementById('startScreen').style.display = 'none';
-      document.getElementById('quizArea').style.display = 'flex';
-      document.getElementById('progressWrap').style.display = 'flex';
-      current = 0;
-      score = 0;
-      results = [];
-      renderQuestion();
+      document.getElementById('quizArea').classList.add('active');
+      document.getElementById('progressBar').style.display = 'flex';
+      document.getElementById('heroArea').style.display = 'none';
+      started = true;
+      idx = 0; score = 0; log = [];
+      render();
     }
 
-    function renderQuestion() {
-      const q = questions[current];
-      answered = false;
+    function render(){
+      const d = DATA[idx];
+      locked = false;
+      document.getElementById('qTag').textContent = `SCENARIO ${String(idx+1).padStart(2,'0')}`;
+      document.getElementById('qText').innerHTML = d.q;
+      document.getElementById('fbBox').className = 'fb';
+      document.getElementById('fbBox').style.display = 'none';
+      document.getElementById('nextBtn').className = 'next';
 
-      document.getElementById('qNum').textContent = `Scenario ${current + 1} of 6`;
-      document.getElementById('qText').innerHTML = q.q;
+      const pct = (idx / DATA.length) * 100;
+      const fill = document.getElementById('progressFill');
+      fill.style.width = pct + '%';
+      if(idx === 0 && pct === 0) fill.style.width = '2%';
+      fill.classList.remove('shimmer');
+      document.getElementById('progressCount').textContent = String(idx+1).padStart(2,'0')+' / '+String(DATA.length).padStart(2,'0');
 
-      document.getElementById('feedback').className = 'feedback';
-      document.getElementById('feedback').style.display = 'none';
-      document.getElementById('nextBtn').className = 'next-btn';
-
-      document.getElementById('progressFill').style.width = `${(current / questions.length) * 100}%`;
-      document.getElementById('progressCount').textContent = `${current + 1} / ${questions.length}`;
-
-      const opts = document.getElementById('options');
-      opts.innerHTML = '';
-      q.options.forEach((opt, i) => {
-        const btn = document.createElement('button');
-        btn.className = 'option';
-        btn.textContent = opt;
-        btn.dataset.idx = i;
-        btn.onclick = () => selectOption(i);
-        opts.appendChild(btn);
+      const box = document.getElementById('optsBox');
+      box.innerHTML = '';
+      const letters = ['A','B','C','D','E','F'];
+      d.opts.forEach((o,i)=>{
+        const b = document.createElement('button');
+        b.className = 'opt';
+        b.innerHTML = `<span class="idx">${letters[i]}</span>${o}`;
+        b.dataset.i = i;
+        b.onclick = ()=>pick(i);
+        box.appendChild(b);
       });
+
+      // scroll to scene
+      document.getElementById('sceneBox').scrollIntoView({behavior:'smooth',block:'start'});
     }
 
-    function selectOption(idx) {
-      if (answered) return;
-      answered = true;
+    function pick(i){
+      if(locked) return;
+      locked = true;
+      const d = DATA[idx];
+      const all = document.querySelectorAll('.opt');
+      all.forEach(el=>el.classList.add('disabled'));
 
-      const q = questions[current];
-      const opts = document.querySelectorAll('.option');
-      opts.forEach(o => o.classList.add('disabled'));
+      const sel = all[i];
+      const cor = all[d.ans];
 
-      const selected = opts[idx];
-      const correct = opts[q.correct];
-
-      if (idx === q.correct) {
+      if(i === d.ans){
         score++;
-        selected.classList.add('correct');
-        showFeedback(true);
+        sel.classList.add('correct');
+        showFB(true);
       } else {
-        selected.classList.add('wrong');
-        correct.classList.add('correct');
-        showFeedback(false);
+        sel.classList.add('wrong');
+        cor.classList.add('correct');
+        showFB(false);
       }
 
-      results.push({ question: q.q, correct: idx === q.correct, userAnswer: q.options[idx], correctAnswer: q.answer });
+      log.push({ q: d.q, ok: i === d.ans, your: d.opts[i], correct: d.label });
 
-      document.getElementById('nextBtn').className = 'next-btn visible';
-      if (current === questions.length - 1) {
-        document.getElementById('nextBtn').textContent = '&#8594; See Results';
-      }
+      // ripple
+      const r = document.createElement('span');
+      r.className = 'ripple';
+      sel.appendChild(r);
+
+      document.getElementById('nextBtn').className = 'next visible';
+      if(idx === DATA.length-1) document.getElementById('nextBtn').textContent = '&#8594; See Results';
+      else document.getElementById('nextBtn').textContent = '&#8594; Next';
     }
 
-    function showFeedback(correct) {
-      const fb = document.getElementById('feedback');
-      const q = questions[current];
-
-      fb.className = `feedback visible ${correct ? 'correct' : 'wrong'}`;
-      document.getElementById('fbIcon').textContent = correct ? '&#10003;' : '&#10007;';
-      document.getElementById('fbTitle').textContent = correct ? 'Correct!' : 'Not quite';
-      document.getElementById('fbExplain').textContent = q.explain;
-
-      // scroll to feedback
-      fb.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    function showFB(ok){
+      const fb = document.getElementById('fbBox');
+      const d = DATA[idx];
+      fb.className = `fb visible ${ok ? 'correct' : 'wrong'}`;
+      document.getElementById('fbIcon').textContent = ok ? '&#10003;' : '&#10007;';
+      document.getElementById('fbTitle').textContent = ok ? 'Correct — nice read.' : 'Not quite.';
+      document.getElementById('fbExplain').innerHTML = `<strong>${d.label}:</strong> ${d.tip}`;
+      fb.scrollIntoView({behavior:'smooth',block:'nearest'});
     }
 
-    function nextQuestion() {
-      current++;
-      if (current >= questions.length) {
-        showResults();
-      } else {
-        renderQuestion();
-      }
+    function advance(){
+      idx++;
+      if(idx >= DATA.length) return showResult();
+      render();
     }
 
-    function showResults() {
+    function showResult(){
+      document.getElementById('quizArea').classList.remove('active');
       document.getElementById('quizArea').style.display = 'none';
-      document.getElementById('progressWrap').style.display = 'none';
-      document.getElementById('resultScreen').className = 'result-screen visible';
+      document.getElementById('progressBar').style.display = 'none';
+      document.getElementById('resultScreen').classList.add('visible');
+      document.getElementById('heroArea').style.display = 'none';
 
-      const scoreEl = document.getElementById('scoreDisplay');
-      scoreEl.textContent = `${score} / ${questions.length}`;
+      const big = document.getElementById('scoreBig');
+      big.textContent = score + '/' + DATA.length;
 
-      if (score === 6) {
-        scoreEl.className = 'big-score perfect';
-        document.getElementById('verdict').textContent = '&#127942; Flawless!';
-        document.getElementById('resultDetail').textContent = "You've nailed every foundation. You truly understand how LLMs work under the hood.";
-      } else if (score >= 4) {
-        scoreEl.className = 'big-score great';
-        document.getElementById('verdict').textContent = '&#128293; Solid grasp!';
-        document.getElementById('resultDetail').textContent = `You got ${score} right. A couple tripped you up — review the ones you missed below.`;
-      } else if (score >= 2) {
-        scoreEl.className = 'big-score good';
-        document.getElementById('verdict').textContent = '&#128221; Getting there';
-        document.getElementById('resultDetail').textContent = `You got ${score} right. The foundations take a bit of practice — review below.`;
+      let cls, v, d;
+      if(score === 6){
+        cls = 'god'; v = '&#128640; Pure understanding.'; d = 'Flawless. You see through the machine.';
+      } else if(score >= 4){
+        cls = 'pro'; v = '&#128200; Strong signal.'; d = `${score}/6. Close — check the misses below and tighten your mental model.`;
+      } else if(score >= 2){
+        cls = 'ok'; v = '&#9881; Calibrating.'; d = `${score}/6. These concepts are subtle. Review the misses and run it again.`;
       } else {
-        scoreEl.className = 'big-score oop';
-        document.getElementById('verdict').textContent = '&#128260; Worth a revisit';
-        document.getElementById('resultDetail').textContent = "Don't worry — these are subtle concepts. Read through the explanations below and try again.";
+        cls = 'nah'; v = '&#128260; Reboot needed.'; d = 'Every expert was once a beginner. Study the explanations below and try again.';
       }
+      big.className = 'big '+cls;
+      document.getElementById('scoreLbl').textContent = 'of 6 correct';
+      document.getElementById('verdictText').textContent = v;
+      document.getElementById('detailText').textContent = d;
 
-      const grid = document.getElementById('reviewGrid');
-      grid.innerHTML = '';
-      results.forEach((r, i) => {
-        const div = document.createElement('div');
-        div.className = `review-item ${r.correct ? 'r-correct' : 'r-wrong'}`;
-        div.innerHTML = `
-          <span class="r-icon">${r.correct ? '&#10003;' : '&#10007;'}</span>
-          <div>
-            <div class="r-label">${r.correct ? r.correctAnswer : r.userAnswer} ${!r.correct ? `&rarr; ${r.correctAnswer}` : ''}</div>
-            <div class="r-q">Scenario ${i + 1}</div>
-          </div>
-        `;
-        grid.appendChild(div);
+      const mx = document.getElementById('matrixBox');
+      mx.innerHTML = '';
+      const icons = ['&#10003;','&#10007;'];
+      log.forEach((r,i)=>{
+        const el = document.createElement('div');
+        el.className = `m-item ${r.ok ? 'm-hit' : 'm-miss'}`;
+        el.innerHTML = `<span class="m-icon">${r.ok ? icons[0] : icons[1]}</span><div><div class="m-label">${r.ok ? r.correct : r.your + ' &rarr; ' + r.correct}</div><div class="m-q">Scenario ${i+1}</div></div>`;
+        mx.appendChild(el);
       });
     }
 
-    function resetQuiz() {
-      document.getElementById('resultScreen').className = 'result-screen';
-      document.getElementById('startScreen').style.display = 'flex';
-      current = 0;
-      score = 0;
-      results = [];
+    function reboot(){
+      document.getElementById('resultScreen').classList.remove('visible');
+      boot();
     }
   </script>
 </body>
